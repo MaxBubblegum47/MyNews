@@ -96,8 +96,6 @@ public class WebsiteContentCheckerThread extends Thread{
         // Show notification
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(123, builder.build());
-
-
     }
 }
 

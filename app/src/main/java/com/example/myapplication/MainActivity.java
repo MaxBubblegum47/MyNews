@@ -2,14 +2,12 @@ package com.example.myapplication;
 
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
-import com.example.myapplication.ArticleDatabaseHelper;
+
+import android.net.Uri;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.webkit.WebView;
 import android.os.Bundle;
-import android.view.View;
 import android.view.Menu;
 import android.widget.Toast;
 import android.database.Cursor;
@@ -25,7 +23,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
-
+    private WebView webViewBBC;
+    private WebView webViewCNN;
+    private WebView webViewFoxNews;
+    private WebView webViewSkynews;
+    private WebView webViewNewsX;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private WebsiteContentCheckerThread contentCheckerThread;
@@ -45,31 +47,52 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                WebView webView = findViewById(R.id.webViewBBC);
+                webViewBBC = findViewById(R.id.webViewBBC);
+                webViewCNN = findViewById(R.id.webViewCNN);
+                webViewFoxNews = findViewById(R.id.webViewFoxNews);
+                webViewSkynews = findViewById(R.id.webViewSkyNews);
+                webViewNewsX = findViewById(R.id.webViewNewsX);
 
-                String articleUrl = webView.getUrl();
-
-                // Check if the URL is not null or empty
-                if (articleUrl != null && !articleUrl.isEmpty()) {
-                    // Extract the article title from the URL (you can implement your own logic)
-                    String articleTitle = articleUrl.toString();
-
-                    // Add the article to favorites
-                    databaseHelper.addArticle(articleTitle, articleUrl);
-                    Toast.makeText(MainActivity.this, "Article added to favorites" + articleUrl, Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(MainActivity.this, "Unable to add article to favorites. No URL found.", Toast.LENGTH_SHORT).show();
+                if (webViewBBC != null){
+                    String url = webViewBBC.getOriginalUrl();
+                    databaseHelper.addArticle(url, url);
+                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
                 }
+
+                if (webViewCNN != null){
+                    String url = webViewCNN.getOriginalUrl();
+                    databaseHelper.addArticle(url, url);
+                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
+                }
+
+                if (webViewFoxNews != null){
+                    String url = webViewFoxNews.getOriginalUrl();
+                    databaseHelper.addArticle(url, url);
+                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
+                }
+
+                if (webViewSkynews != null){
+                    String url = webViewSkynews.getOriginalUrl();
+                    databaseHelper.addArticle(url, url);
+                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
+                }
+
+                if (webViewNewsX != null){
+                    String url = webViewNewsX.getOriginalUrl();
+                    databaseHelper.addArticle(url, url);
+                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
 
         // Initialize and start the content checker thread
-        String websiteUrl = "https://www.repubblica.it"; // Replace with your website URL for main page
+        String websiteUrl = "https://www.gazzetta.it"; // Replace with your website URL for main page
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrl);
         contentCheckerThread.start();
 
         DrawerLayout drawer = binding.drawerLayout;
-        NavigationView navigationView = binding.navView;
+        NavigationView navigationView = binding.webView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.foxNewsFragment, R.id.skyNewsFragment)
                 .setOpenableLayout(drawer)
