@@ -1,4 +1,4 @@
-# NewsZilla
+# MyNews
 An android application where you can read news from multiple news platform like CNN, FoxNews, and many more...
 <p>
   <b>Panel for different channels :-</b>
