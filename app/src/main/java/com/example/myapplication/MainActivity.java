@@ -86,9 +86,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Initialize and start the content checker thread
-        String websiteUrl = "https://www.gazzetta.it"; // Replace with your website URL for main page
-        contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrl);
+        // Content Checkers
+        String websiteUrlRepubblica = "https://www.repubblica.it"; // Replace with your website URL for main page
+        contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlRepubblica);
+        contentCheckerThread.start();
+
+        String websiteUrlGazzetta = "https://gazzetta.it";
+        contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlGazzetta);
+        contentCheckerThread.start();
+
+        String websiteUrlCorriere = "https://corriere.it";
+        contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlCorriere);
+        contentCheckerThread.start();
+
+        String websiteUrlSkyTg24 = "https://tg24sky.it";
+        contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlSkyTg24);
+        contentCheckerThread.start();
+
+        String websiteUrlInternazionale = "https://internazionale.it";
+        contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlInternazionale);
         contentCheckerThread.start();
 
         DrawerLayout drawer = binding.drawerLayout;

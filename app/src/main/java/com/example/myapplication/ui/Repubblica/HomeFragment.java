@@ -23,7 +23,6 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         WebView webView = binding.webViewBBC;
-        // webView.loadUrl("https://www.timeanddate.com/"); this website is actually for testing the check thread
         webView.loadUrl("https://repubblica.it");
         webView.setWebViewClient(new WebViewController());
 
