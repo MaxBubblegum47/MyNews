@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:menuCategory="secondary"
+            android:title="Repubblica" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:menuCategory="secondary"
+            android:title="Articoli Preferiti" />
+        <item
+            android:id="@+id/nav_slideshow"
+            android:menuCategory="secondary"
+            android:title="Corriere della Sera" />
+        <item
+            android:id="@+id/foxNewsFragment"
+            android:menuCategory="secondary"
+            android:title="Gazzetta dello Sport" />
+
+        <item
+            android:id="@+id/skyNewsFragment"
+            android:menuCategory="secondary"
+            android:title="SkyTg24" />
+        <item
+            android:id="@+id/InternazionaleFragment"
+            android:menuCategory="secondary"
+            android:title="Internazionale" />
+        <item
+            android:id="@+id/PreferencesFragment"
+            android:menuCategory="secondary"
+            android:title="Preferenze" />
+    </group>
+</menu>
