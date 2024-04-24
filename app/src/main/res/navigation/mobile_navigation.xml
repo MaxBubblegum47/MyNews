@@ -24,12 +24,12 @@
         tools:layout="@layout/fragment_slideshow" />
     <fragment
         android:id="@+id/foxNewsFragment"
-        android:name="com.example.myapplication.ui.FoxNews.FoxnewsFragment"
+        android:name="com.example.myapplication.ui.GazzettaSky.GazzettaFragment"
         android:label="Gazzetta dello Sport"
         tools:layout="@layout/fragment_fox_news" />
     <fragment
         android:id="@+id/skyNewsFragment"
-        android:name="com.example.myapplication.ui.FoxNews.SkyNewsFragment"
+        android:name="com.example.myapplication.ui.GazzettaSky.SkyNewsFragment"
         android:label="SkyTG24"
         tools:layout="@layout/fragment_sky_news" />
     <fragment

@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.FoxNews;
+package com.example.myapplication.ui.GazzettaSky;
 
 import android.os.Bundle;
 
@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 
-import com.example.myapplication.R;
 import com.example.myapplication.WebViewController;
 import com.example.myapplication.databinding.FragmentHomeBinding;
 
