@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlCorriere);
         contentCheckerThread.start();
 
-        String websiteUrlSkyTg24 = "https://tg24sky.it";
+        String websiteUrlSkyTg24 = "https://tg24.sky.it";
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlSkyTg24);
         contentCheckerThread.start();
 
