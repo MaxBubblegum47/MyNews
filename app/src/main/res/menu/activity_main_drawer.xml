@@ -10,10 +10,6 @@
             android:menuCategory="secondary"
             android:title="Repubblica" />
         <item
-            android:id="@+id/nav_gallery"
-            android:menuCategory="secondary"
-            android:title="Articoli Preferiti" />
-        <item
             android:id="@+id/nav_slideshow"
             android:menuCategory="secondary"
             android:title="Corriere della Sera" />
@@ -34,5 +30,9 @@
             android:id="@+id/PreferencesFragment"
             android:menuCategory="secondary"
             android:title="Preferenze" />
+        <item
+            android:id="@+id/nav_gallery"
+            android:menuCategory="secondary"
+            android:title="Articoli Preferiti" />
     </group>
 </menu>

@@ -3,6 +3,9 @@ package com.example.myapplication.ui.Preferences;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.webkit.WebView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +23,13 @@ import android.widget.TextView;
 import com.example.myapplication.ArticleSuggestion;
 import java.util.List;
 public class Preferences extends Fragment {
+    private WebView webViewFavoriteArticles;
 
     private SharedPreferences sharedPreferences;
-    private ToggleButton toggleButton1, toggleButton2;
+    private ToggleButton toggleButton1, toggleButton2, toggleButton3, toggleButton4;
     private TextView suggestedArticlesTextView;
 
-
+    private RadioGroup radioGroup;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -34,12 +38,19 @@ public class Preferences extends Fragment {
         sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         toggleButton1 = rootView.findViewById(R.id.toggleButton1);
         toggleButton2 = rootView.findViewById(R.id.toggleButton2);
+        toggleButton3 = rootView.findViewById(R.id.toggleButton3);
+        toggleButton4 = rootView.findViewById(R.id.toggleButton4);
 
-        suggestedArticlesTextView = rootView.findViewById(R.id.suggestedArticlesTextView);
+        webViewFavoriteArticles = rootView.findViewById(R.id.suggestedArticlesTextView);
+
+        // suggestedArticlesTextView = rootView.findViewById(R.id.suggestedArticlesTextView);
 
         // Retrieve and set the saved state for toggle buttons
-        toggleButton1.setChecked(sharedPreferences.getBoolean("toggle1", true));
-        toggleButton2.setChecked(sharedPreferences.getBoolean("toggle2", true));
+        toggleButton1.setChecked(sharedPreferences.getBoolean("toggle1", false));
+        toggleButton2.setChecked(sharedPreferences.getBoolean("toggle2", false));
+        toggleButton3.setChecked(sharedPreferences.getBoolean("toggle3", false));
+        toggleButton4.setChecked(sharedPreferences.getBoolean("toggle4", false));
+
 
         // Add listeners to toggle buttons to save their state when changed
         toggleButton1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -60,26 +71,46 @@ public class Preferences extends Fragment {
             }
         });
 
-        boolean politicsPref = toggleButton1.isChecked();
-        boolean sportsPref = toggleButton2.isChecked();
+        toggleButton3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("toggle3", isChecked);
+                editor.apply();
+            }
+        });
 
+        toggleButton4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("toggle4", isChecked);
+                editor.apply();
+            }
+        });
+
+        boolean politicsPref = toggleButton1.isChecked();
+        boolean techPref = toggleButton2.isChecked();
+        boolean autoPref = toggleButton3.isChecked();
+        boolean musicPref = toggleButton4.isChecked();
 
         // Suggest article based on user preferences
         //String suggestedArticle = ArticleSuggestion.suggestArticles(politicsPref, sportsPref);
 
-        List<ArticleSuggestion.Article> suggestedArticles = ArticleSuggestion.suggestArticles(politicsPref, sportsPref);
+        List<ArticleSuggestion.Article> suggestedArticles = ArticleSuggestion.suggestArticles(politicsPref, techPref, autoPref, musicPref);
 
         // Create a StringBuilder to build the suggested articles string
-        StringBuilder suggestedArticlesStringBuilder = new StringBuilder();
+        StringBuilder htmlContent = new StringBuilder();
+        htmlContent.append("<html><body>");
 
-        // Iterate over the list of suggested articles and append each article's title to the StringBuilder
         for (ArticleSuggestion.Article article : suggestedArticles) {
-            suggestedArticlesStringBuilder.append(article.getTitle()).append("\n");
+            htmlContent.append("<a href=\"").append(article.getTitle()).append("\">").append(article.getTitle()).append("</a><br>");
         }
 
-        // Convert the StringBuilder to a String
-        String suggestedArticlesString = suggestedArticlesStringBuilder.toString();
-        suggestedArticlesTextView.setText(suggestedArticlesString);
+        htmlContent.append("</body></html>");
+
+        webViewFavoriteArticles.loadData(htmlContent.toString(), "text/html", "UTF-8");
+
 
         return rootView;
     }
