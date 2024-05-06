@@ -3,8 +3,6 @@ package com.example.myapplication;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
-import android.net.Uri;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.view.View;
 import android.os.Bundle;
@@ -137,11 +135,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
+    // I leave it here because maybe one day could be useful
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.main, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onSupportNavigateUp() {

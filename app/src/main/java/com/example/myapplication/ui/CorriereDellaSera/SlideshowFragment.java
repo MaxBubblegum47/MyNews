@@ -6,13 +6,11 @@ import android.view.View;
 import android.webkit.WebView;
 
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.myapplication.ArticleDatabaseHelper;
-import com.example.myapplication.MainActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.WebViewController;
 import com.example.myapplication.databinding.FragmentSlideshowBinding;

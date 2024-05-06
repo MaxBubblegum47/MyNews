@@ -2,9 +2,7 @@ package com.example.myapplication;
 import android.content.Context;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 import android.content.Intent;
 import android.app.PendingIntent;
 
@@ -79,7 +77,7 @@ public class WebsiteContentCheckerThread extends Thread{
             notificationManager.createNotificationChannel(channel);
         }
 
-// Create and for when the notification is clicked. This is a test
+        // Create and for when the notification is clicked. This is a test
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
