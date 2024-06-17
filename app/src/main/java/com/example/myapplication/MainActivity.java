@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlSkyTg24);
         contentCheckerThread.start();
 
-        String websiteUrlInternazionale = "https://internazionale.it";
+        String websiteUrlInternazionale = "https://time.is/"; // I have put this website just to check if the thread is working correctly
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlInternazionale);
         contentCheckerThread.start();
 

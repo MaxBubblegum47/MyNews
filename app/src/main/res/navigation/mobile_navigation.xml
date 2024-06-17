@@ -34,7 +34,7 @@
         android:id="@+id/GazzettaFragment"
         android:name="com.example.myapplication.ui.GazzettaSky.GazzettaFragment"
         android:label="Gazzetta dello Sport"
-        tools:layout="@layout/fragment_fox_news" >
+        tools:layout="@layout/fragment_gazzetta" >
         <action
             android:id="@+id/action_foxNewsFragment_to_nav_home"
             app:destination="@id/nav_home" />
