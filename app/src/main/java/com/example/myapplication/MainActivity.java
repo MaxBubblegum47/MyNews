@@ -3,6 +3,8 @@ package com.example.myapplication;
 import com.example.myapplication.databinding.ActivityMainBinding;
 import com.google.android.material.navigation.NavigationView;
 
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.webkit.WebView;
 import android.view.View;
 import android.os.Bundle;
@@ -45,13 +47,6 @@ public class MainActivity extends AppCompatActivity {
                     databaseHelper.addArticle(url, url);
                     Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
             }
         });
 
@@ -109,14 +104,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*
-
-     * This is the settings menu button
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    } */
+        new MenuInflater(this).inflate(R.menu.main, menu);
+        return (super.onCreateOptionsMenu(menu));
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_settings){
+            Toast.makeText(this, "Article removed from favorites", Toast.LENGTH_SHORT).show();
+            databaseHelper.deleteAllArticles();
+        }
+        return false;
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

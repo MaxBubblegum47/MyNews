@@ -58,6 +58,11 @@ public class ArticleDatabaseHelper extends SQLiteOpenHelper {
         return db.query(TABLE_ARTICLES, null, null, null, null, null, null);
     }
 
+    public int deleteAllArticles() {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TABLE_ARTICLES, null, null);
+    }
+
     public ArrayList<String> getAllArticleTitles() {
         ArrayList<String> articleTitles = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
