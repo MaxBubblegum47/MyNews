@@ -1,4 +1,4 @@
-# MyNews
+ # MyNews
 ## Introduzione
 My news è una applicazione sviluppata in java per android che ha l'obiettivo di permettere all'utente di visualizzare diverse pagine di giornali online comodamente dal suo smartphone android.
 L'utente riceve notifiche ogni qual volta vi sono dei nuovi contenuti all'interno dei siti web che sono supportati di defualt dall'applicazione:

@@ -20,7 +20,8 @@ public class WebsiteContentCheckerThread extends Thread{
     private static final String TAG = "WebsiteContentChecker";
     private static final String CHANNEL_ID = "WebsiteContentNotification";
 
-    private static final long CHECK_INTERVAL = 5000; // 5 seconds interval
+    // 5 seconds interval
+    private static final long CHECK_INTERVAL = 5000;
     private final Context context;
     private final String websiteUrl;
     private String lastContent;
@@ -30,6 +31,12 @@ public class WebsiteContentCheckerThread extends Thread{
         this.websiteUrl = websiteUrl;
     }
 
+    /*
+
+     * The thread dumps the main page of the journal every five seconds. It keeps 2 version of the webpage
+     * one new and one 5 seconds older. If there are some differences between the newer page and the older one, then
+     * it will throw a notification to the user.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void run() {
@@ -65,9 +72,10 @@ public class WebsiteContentCheckerThread extends Thread{
             }
         }
     }
+
+    /* Create notification channel for Android Oreo and higher */
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void sendNotification() {
-        // Create notification channel for Android Oreo and higher
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             String channelId = "WebsiteContentNotification";
@@ -77,21 +85,20 @@ public class WebsiteContentCheckerThread extends Thread{
             notificationManager.createNotificationChannel(channel);
         }
 
-        // Create and for when the notification is clicked. This is a test
         Intent intent = new Intent(context, MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
-        // Build notification
+        /* Build notification */
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "WebsiteContentNotification")
-                .setSmallIcon(R.drawable.bbc_logo_2021)
+                .setSmallIcon(R.drawable.icons8_google_news)
                 .setContentTitle("Website Content Checker")
-                .setContentText("New content detected on the website!")
+                .setContentText("New content detected on news websites!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent) // Set the intent to be triggered when the notification is clicked
+                .setContentIntent(pendingIntent) // Set the intent to be triggered when the notification is clicked. The user will be brought the the main page
                 .setAutoCancel(true); // Automatically dismiss the notification when clicked
 
-        // Show notification
+        /* Show notification */
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(123, builder.build());
     }

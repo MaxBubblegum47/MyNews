@@ -8,6 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import java.util.ArrayList;
 
+/*
+
+ * This is a simple SQLiteDatabase, I think that functions are pretty
+ * straightforward so they don't need any sort of comments. If the reader
+ * still has any doubts on them, please reach me at: 257544@studenti.unimore.it
+ */
+
 public class ArticleDatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "articles.db";
     private static final int DATABASE_VERSION = 1;

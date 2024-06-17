@@ -29,10 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private WebsiteContentCheckerThread contentCheckerThread;
-
     private ArticleDatabaseHelper databaseHelper;
 
-    // I need to copy this across all possible newspapers
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        // this is the post icon, if I want to add some particular function
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
                 webViewSkynews = findViewById(R.id.webViewSkyNews);
                 webViewNewsX = findViewById(R.id.webViewNewsX);
 
+                /* Unfortunately I didn't end up with a better solution to save
+                   articles from different webview in the same database.
+                 */
                 if (webViewBBC != null){
                     String url = webViewBBC.getOriginalUrl();
                     databaseHelper.addArticle(url, url);
@@ -84,8 +84,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Content Checkers
-        String websiteUrlRepubblica = "https://www.repubblica.it"; // Replace with your website URL for main page
+        /* Content Checkers
+           In this I start the threads that check for each website it there
+           is new content. If there is something new on the website then a notification
+           is thrown.
+         */
+        String websiteUrlRepubblica = "https://www.repubblica.it";
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlRepubblica);
         contentCheckerThread.start();
 
@@ -116,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
         databaseHelper = new ArticleDatabaseHelper(this);
 
-
-        // Example: Display favorite articles
         displayFavoriteArticles();
     }
 
+    /* This method obtain all the info about favourites articles from the database
+       and then display them.
+    */
     private void displayFavoriteArticles() {
-        // Example: Retrieve and display favorite articles
         Cursor cursor = databaseHelper.getAllArticles();
         if (cursor != null) {
             while (cursor.moveToNext()) {
@@ -135,12 +139,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // I leave it here because maybe one day could be useful
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
+    /*
+
+     * This is the settings menu button
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    } */
 
     @Override
     public boolean onSupportNavigateUp() {
