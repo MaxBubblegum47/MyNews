@@ -13,29 +13,25 @@ import androidx.fragment.app.Fragment;
 import com.example.myapplication.ArticleDatabaseHelper;
 import com.example.myapplication.R;
 import com.example.myapplication.WebViewController;
+import com.example.myapplication.databinding.FragmentHomeBinding;
 import com.example.myapplication.databinding.FragmentSlideshowBinding;
 
 public class CorriereSeraFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
-    private ArticleDatabaseHelper databaseHelper;
+    private FragmentHomeBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-        WebView webView = root.findViewById(R.id.webViewCNN);
-        webView.loadUrl("https://www.corriere.it/");
+        WebView webView = binding.webViewNews;
+        webView.loadUrl("https://corriere.it");
         webView.setWebViewClient(new WebViewController());
 
         return root;
     }
-
-
 
 
     @Override

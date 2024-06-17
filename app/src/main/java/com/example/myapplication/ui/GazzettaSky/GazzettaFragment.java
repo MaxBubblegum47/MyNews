@@ -28,7 +28,7 @@ public class GazzettaFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        WebView webView = binding.webViewBBC;
+        WebView webView = binding.webViewNews;
         webView.loadUrl("https://gazzetta.it");
         webView.setWebViewClient(new WebViewController());
 

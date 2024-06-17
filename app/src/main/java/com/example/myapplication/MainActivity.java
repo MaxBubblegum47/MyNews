@@ -21,11 +21,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class MainActivity extends AppCompatActivity {
-    private WebView webViewBBC;
-    private WebView webViewCNN;
-    private WebView webViewFoxNews;
-    private WebView webViewSkynews;
-    private WebView webViewNewsX;
+    private WebView webViewNews;
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
     private WebsiteContentCheckerThread contentCheckerThread;
@@ -42,44 +38,19 @@ public class MainActivity extends AppCompatActivity {
         binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                webViewBBC = findViewById(R.id.webViewBBC);
-                webViewCNN = findViewById(R.id.webViewCNN);
-                webViewFoxNews = findViewById(R.id.webViewFoxNews);
-                webViewSkynews = findViewById(R.id.webViewSkyNews);
-                webViewNewsX = findViewById(R.id.webViewNewsX);
+                webViewNews = findViewById(R.id.webViewNews);
 
-                /* Unfortunately I didn't end up with a better solution to save
-                   articles from different webview in the same database.
-                 */
-                if (webViewBBC != null){
-                    String url = webViewBBC.getOriginalUrl();
+                if (webViewNews != null){
+                    String url = webViewNews.getOriginalUrl();
                     databaseHelper.addArticle(url, url);
                     Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
 
-                if (webViewCNN != null){
-                    String url = webViewCNN.getOriginalUrl();
-                    databaseHelper.addArticle(url, url);
-                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
-                }
-
-                if (webViewFoxNews != null){
-                    String url = webViewFoxNews.getOriginalUrl();
-                    databaseHelper.addArticle(url, url);
-                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
-                }
-
-                if (webViewSkynews != null){
-                    String url = webViewSkynews.getOriginalUrl();
-                    databaseHelper.addArticle(url, url);
-                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
-                }
-
-                if (webViewNewsX != null){
-                    String url = webViewNewsX.getOriginalUrl();
-                    databaseHelper.addArticle(url, url);
-                    Toast.makeText(MainActivity.this, "Article added to favorites" + url, Toast.LENGTH_SHORT).show();
-                }
+        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
             }
         });
@@ -112,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.webView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.foxNewsFragment, R.id.skyNewsFragment)
+                R.id.nav_home, R.id.nav_gallery, R.id.CorriereSeraFragment, R.id.foxNewsFragment, R.id.skyNewsFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -133,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                 String title = cursor.getString(cursor.getColumnIndexOrThrow(ArticleDatabaseHelper.COLUMN_TITLE));
                 String url = cursor.getString(cursor.getColumnIndexOrThrow(ArticleDatabaseHelper.COLUMN_URL));
                 Log.d("MainActivity", "Title: " + title + ", URL: " + url);
-                // Display the favorite article in your UI (e.g., in a ListView or RecyclerView)
             }
             cursor.close();
         }

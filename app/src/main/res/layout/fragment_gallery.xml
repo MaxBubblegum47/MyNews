@@ -7,7 +7,7 @@
     tools:context=".ui.FavoriteArticles.GalleryFragment">
 
     <WebView
-        android:id="@+id/webViewNewsX"
+        android:id="@+id/webViewNews"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -10,7 +10,7 @@
             android:menuCategory="secondary"
             android:title="Repubblica" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/CorriereSeraFragment"
             android:menuCategory="secondary"
             android:title="Corriere della Sera" />
         <item

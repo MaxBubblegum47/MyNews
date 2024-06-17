@@ -26,7 +26,7 @@
 //        binding = FragmentGalleryBinding.inflate(inflater, container, false);
 //        View root = binding.getRoot();
 //
-//        WebView webView = root.findViewById(R.id.webViewNewsX);
+//        WebView webView = root.findViewById(R.id.webViewNews);
 //        webView.loadUrl("https://www.newsx.com/");
 //        webView.setWebViewClient(new WebViewController());
 //
@@ -64,7 +64,7 @@ public class GalleryFragment extends Fragment {
 
         View root = inflater.inflate(R.layout.fragment_gallery, container, false);
 
-        webViewFavoriteArticles = root.findViewById(R.id.webViewNewsX);
+        webViewFavoriteArticles = root.findViewById(R.id.webViewNews);
         loadFavoriteArticles();
 
         return root;

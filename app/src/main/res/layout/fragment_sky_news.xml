@@ -6,7 +6,7 @@
     tools:context=".ui.GazzettaSky.SkyNewsFragment">
 
     <WebView
-        android:id="@+id/webViewSkyNews"
+        android:id="@+id/webViewNews"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </FrameLayout>
