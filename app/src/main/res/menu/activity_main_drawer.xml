@@ -14,7 +14,7 @@
             android:menuCategory="secondary"
             android:title="Corriere della Sera" />
         <item
-            android:id="@+id/foxNewsFragment"
+            android:id="@+id/GazzettaFragment"
             android:menuCategory="secondary"
             android:title="Gazzetta dello Sport" />
 

@@ -15,31 +15,55 @@
         android:id="@+id/nav_gallery"
         android:name="com.example.myapplication.ui.FavoriteArticles.GalleryFragment"
         android:label="Articoli Preferiti"
-        tools:layout="@layout/fragment_gallery" />
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 
     <fragment
         android:id="@+id/CorriereSeraFragment"
         android:name="com.example.myapplication.ui.CorriereDellaSera.CorriereSeraFragment"
         android:label="Corriere della Sera"
-        tools:layout="@layout/fragment_slideshow" />
+        tools:layout="@layout/fragment_slideshow" >
+        <action
+            android:id="@+id/action_CorriereSeraFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
-        android:id="@+id/foxNewsFragment"
+        android:id="@+id/GazzettaFragment"
         android:name="com.example.myapplication.ui.GazzettaSky.GazzettaFragment"
         android:label="Gazzetta dello Sport"
-        tools:layout="@layout/fragment_fox_news" />
+        tools:layout="@layout/fragment_fox_news" >
+        <action
+            android:id="@+id/action_foxNewsFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/skyNewsFragment"
         android:name="com.example.myapplication.ui.GazzettaSky.SkyNewsFragment"
         android:label="SkyTG24"
-        tools:layout="@layout/fragment_sky_news" />
+        tools:layout="@layout/fragment_sky_news" >
+        <action
+            android:id="@+id/action_skyNewsFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/InternazionaleFragment"
         android:name="com.example.myapplication.ui.Internazionale.Internazionale"
         android:label="Internazionale"
-        tools:layout="@layout/fragment_internazionale" />
+        tools:layout="@layout/fragment_internazionale" >
+        <action
+            android:id="@+id/action_InternazionaleFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
     <fragment
         android:id="@+id/PreferencesFragment"
         android:name="com.example.myapplication.ui.Preferences.Preferences"
         android:label="Preferences"
-        tools:layout="@layout/preferences" />
+        tools:layout="@layout/preferences" >
+        <action
+            android:id="@+id/action_PreferencesFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
 </navigation>
