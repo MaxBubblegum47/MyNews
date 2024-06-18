@@ -39,7 +39,7 @@ public class ArticleSuggestion {
         public static List<Article> getAllArticles() {
             List<Article> allArticles = new ArrayList<>();
 
-            allArticles.add(new Article("https://repubblica.it", Arrays.asList("politics")));
+            allArticles.add(new Article("https://gazzettadelsud.it/", Arrays.asList("politics")));
             allArticles.add(new Article("https://www.nytimes.com/", Arrays.asList("politics")));
             allArticles.add(new Article("https://charliehebdo.fr/", Arrays.asList("politics")));
             allArticles.add(new Article("https://www.aljazeera.com/", Arrays.asList("politics")));
