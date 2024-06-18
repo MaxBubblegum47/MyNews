@@ -1,15 +1,15 @@
 # MyNews
 ## Introduzione
-My news è una applicazione sviluppata in java per dispotivi android che ha l'obiettivo di permettere all'utente di visualizzare diverse pagine di giornali online proprio smartphone android. All'interno dell'applicazione
-sono disponibili le maggiori testate giornalistiche italiane (Repubblica, Corriere della Sera, Gazzetta dello sport, ...), ma qualora non dovessero bastare l'utente puo' ricevere suggerimenti rispetto ad altri giornali. L'applicazione fornisce la possibilita' di salvare gli articoli preferiti in un comodo database locale e controlla regolarmente la presenza di nuovi contenuti all'interno dei siti web che sono disponibili dall'applicazione. Visualizzando i giornali attraverso l'applicazione l'utente evita qualsiasi tipo di pubblicita'. Questo perche' nativamente l'applicazione non esegue alcun codice javascript presente nei siti e il risultato finale e' quella di una navigazione senza alcun tipo di cooky di sessione, pubblicita', spot da visualizzare per 10 secondi per poter leggere il nostro articolo preferito. 
+My news è una applicazione sviluppata in java, per dispotivi android, che ha l'obiettivo di permettere la visualizzazione di diversi giornali online sul proprio smartphone android. All'interno di MyNews 
+sono disponibili le maggiori testate giornalistiche italiane (Repubblica, Corriere della Sera, Gazzetta dello sport, ...), ma qualora non dovessero bastare l'utente puo' ricevere suggerimenti rispetto ad altri giornali in base ai propri gusti. L'applicazione fornisce la possibilita' di salvare gli articoli preferiti in un comodo database locale e controlla regolarmente la presenza di nuovi contenuti all'interno dei giornali online. Visualizzando i giornali attraverso l'applicazione l'utente evita qualsiasi tipo di pubblicita'. Questo perche' nativamente l'applicazione non esegue alcun codice javas cript presente nei siti. Il risultato finale e' quella di una navigazione senza alcun tipo di coockie di sessione o pubblicita'.
 
-All'avvio dell'applicazione ci si trova all'interno all'interno della pagina di uno dei giornali online disponibili. Da questo sito possiamo spostarsi all'interno degli altri giornali attraverso un menù presente in alto a sinitra. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta leggendo alla lista di articoli preferiti. Qualora l'utente volesse decidere di eliminare l'attuale lista di preferita bastera' accedere alle impostazioni presenti in alto a destra.
+All'avvio dell'applicazione ci si trova all'interno all'interno della pagina di uno dei giornali online, Repubblica. Da questo sito possiamo spostarsi all'interno degli altri giornali attraverso un menù presente in alto a sinitra. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta leggendo alla lista di articoli preferiti. Qualora l'utente volesse decidere di eliminare l'attuale lista di preferita bastera' accedere alle impostazioni presenti in alto a destra.
 
 ![screenshot_1](https://github.com/MaxBubblegum47/MyNews/blob/main/res/navigation_bar.jpg)
 
 ## Approfondimento tecnico
 ### WebView
-L'applicazione fa intenso uso di webview per andare a visualizzare le pagine dei giornali. La webview permette di visualizzare siti e di poterli navigare, come se venisse usato un browser web. La differenza piu' grande e' che non puo' eseguire tutto il codice che compone la pagina web, in particolare codice Java Script, a meno che non venga esplicitamente espresso dal programmatore:
+L'applicazione fa uso della clasee WebView per andare a visualizzare le pagine dei giornali. Tale classe permette di visualizzare siti web come se l'utente stesse utilizzando un browser web. La differenza piu' grande e' che non puo' eseguire tutto il codice che compone la pagina web, in particolare codice Java Script, a meno che non venga esplicitamente espresso dal programmatore, come nel seguente esempio:
 ```
     WebSettings webSettings = webView.getSettings();
     webSettings.setJavaScriptEnabled(true);
@@ -21,7 +21,7 @@ L'applicazione fa intenso uso di webview per andare a visualizzare le pagine dei
     webSettings.setSupportZoom(true);
     webSettings.setDefaultTextEncodingName("utf-8");
 ```
-Questo porta la webview a non essere suscettibile a tutte le pubblicita' presenti sul sito ed evitando qualsiasi sistema di subscription presente su di esso. Il risultato finale e' che e' come se navigassimo sul nostro browser con un adblocker abilitato estremamente restrittivo. A livello di implementazione in Java, le webview che permettono la visualizzazione dei giornali sono tutte formate come segue:
+Questo porta la webview a non essere suscettibile a tutte le pubblicita' presenti sul sito ed evitando qualsiasi sistema di subscription presente su di esso. Il risultato finale e' che e' come se navigassimo sul nostro browser con un adblocker abilitato estremamente restrittivo. A livello di implementazione in Java le pagine dei giornali sono implementate come segue:
 
 ```
 public class GazzettaFragment extends Fragment {
@@ -65,7 +65,7 @@ Di seguito il relativo codice XML:
 </FrameLayout>
 ```
 
-Le webview non solo solamente state usate solamente per visualizzare i giornali, ma anche per la UI degli articoli suggeriti e per gli articoli preferiti. Questo perche' mi permettono di visualizzare a schermo link cliccabili dall'utente senza bisogno di creare una textview con bottoni e action listener. Tutte le webview sono inserite all'interno di fragment che vengono navigati attarverso AndroidX.
+Le webview non son state usate solamente per visualizzare i giornali, ma anche all'interno del Fragment relativo agli articoli suggeriti e per gli articoli preferiti. Questo perche' permettono di visualizzare a schermo link cliccabili dall'utente senza bisogno di utilizzare la classe TextView con bottoni ed eventuali action listener. Tutte le WebView utilizzate sono inserite all'interno di fragment che vengono navigati attarverso AndroidX.
 
 ![screenshot_2](https://github.com/MaxBubblegum47/MyNews/blob/main/res/internazionale_example.jpg)
 
@@ -106,7 +106,7 @@ Il database è locale ed e' stata usata la libreria SQLite. Al suo interno vengo
         return articleTitles;
     }
 ```
-Questi metodi sono legati a funzionalita' come l'aggiunta di un articolo alla lista dei preferiti, l'eliminazione di tale lista, o la visualizzazione degli articoli salvati all'interno della pagina preposta. Gli oggetti del database presentano la seguente struttura:
+Questi metodi vengono invocati per poter fornire funzionalita' quali: l'aggiunta di un articolo alla lista dei preferiti, l'eliminazione di tale lista, o la visualizzazione degli articoli salvati all'interno della pagina preposta. Gli oggetti che compongono il database presentano la seguente struttura:
 - COLUMN_ID = INTEGER PRIMARY KEY
 - COLUMN_TITLE = TEXT
 - COLUMN_URL = TEXT
@@ -115,7 +115,7 @@ Questi metodi sono legati a funzionalita' come l'aggiunta di un articolo alla li
 ![screenshot_4](https://github.com/MaxBubblegum47/MyNews/blob/main/res/clean_favorites_articles.jpg)
 
 ### Threads
-All'interno dell'applicazione sono stati inseriti dei threads che controllano la presenza di nuovo sui giornali ogni 5 secondi dal primo avvio dell'applicazione. Ogni giornale ha il suo thread dedicato che viene instanziato all'interno del main:
+All'interno dell'applicazione sono stati inseriti dei threads che controllano la presenza di nuovi contenuti sui giornali. Tale operazione viene svolta ogni 5 secondi dal primo avvio dell'applicazione. Ogni giornale ha il suo thread dedicato che viene instanziato all'interno della classe main:
 ```
 String websiteUrlRepubblica = "https://www.repubblica.it"; // Replace with your website URL for main page
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlRepubblica);
@@ -138,7 +138,7 @@ String websiteUrlRepubblica = "https://www.repubblica.it"; // Replace with your 
         contentCheckerThread.start();
 ```
 
-Il thread esegue un dump periodico della pagina web del sito e controlla che il contenuto della pagina non sia diverso da quello scaricato 5 secondi prima (se disponibile). In caso vi siano delle differenze, e quindi del nuovo contenuto, allora l'applicazione provvede a fornire una notifica all'utente:
+Il thread esegue un dump periodico della pagina web del giornale e controlla se il contenuto della pagina sia diverso da quello scaricato 5 secondi prima (se disponibile). In caso vi siano delle differenze tra il dump attuale e quello passato, e quindi sia presente nuovo contenuto sul giornale, l'applicazione provvede a fornire una notifica all'utente:
 ```
 InputStream in = urlConnection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -172,7 +172,7 @@ Di seguito il codice relativo alla gestione delle notifica
 ![screenshot_5](https://github.com/MaxBubblegum47/MyNews/blob/main/res/notifications.jpg)
 
 ### Articoli Suggeriti
-Il funzionamento degli articoli suggeriti si basa su una serie di bottoni che se premuti dall'utente indicano una sua preferenza rispetto ad un determinato tema. Combinando i valori di questi bottoni vengono poi visualizzati a schermo le testate giornalistiche che l'applicazione suggerisce all'utente. Questi giornali sono salvati all'interno dell'applicazione e presentano dei tag connessi ai bottoni sopracitati. In base alla combinazione di preferenze indicate dall'utente verranno visualizzati specifici giornali. 
+Il funzionamento degli articoli suggeriti si basa su una serie di bottoni che quando premuti dall'utente indicano una sua preferenza rispetto ad un determinato tema. Combinando i valori di questi bottoni vengono poi visualizzati a schermo i giornali che piu' sono affini ai gusti dell'utente. 
 ```
 public static List<Article> getAllArticles() {
             List<Article> allArticles = new ArrayList<>();
@@ -236,4 +236,4 @@ public static List<Article> getAllArticles() {
 ![screenshot_6](https://github.com/MaxBubblegum47/MyNews/blob/main/res/preferences_2.jpg)
 
 ## Futuri Sviluppi
-L'applicazione allo stato attuale e' funzionante, ma necessita di alcune rifiniture per quel che riguarda l'aspetto grafico: la pagina degli articoli salvati andrebbe implementata con delle textview che migliorino la lettura della pagina e diano un aspetto piu' gradevole all'utente. Ritengo sia necessario aggiungere una funzionalita' per la quale l'utente possa aggiungere altri giornali online secondo i suoi gusti: immagino una textbox all'interno della quale l'utente inserisca l'indirizzo di un giornale online e questo venga aggiunto all'applicazione. Le notifiche potrebbero essere piu' precise e verbose, indicando il sito su cui e' presente il nuovo contenuto e che tipo di contenuto si tratta. Anche per quel che riguarda la funzionalita' dei suggerimenti si potrebbe espanderla ed aggiungere molti piu' giornali da suggerire all'utente.
+L'applicazione allo stato attuale e' funzionante, ma necessita di alcune rifiniture per quel che riguarda l'aspetto grafico: la pagina degli articoli salvati potrebbe essere implementata con delle TextView che migliorino la lettura della pagina stessa e diano un aspetto piu' gradevole all'utente. Ritengo sia necessario aggiungere una funzionalita' per la quale l'utente possa aggiungere altri giornali online secondo i suoi gusti: immagino una textbox all'interno della quale l'utente possa inserire l'indirizzo di un giornale online e successivamente questo venga automaticamente aggiunto ai giornali disponibili all'interno dell'applicazione. Le notifiche potrebbero essere piu' precise e verbose, indicando il sito su cui e' presente il nuovo contenuto e la tipologia di quest'ultimo. Anche per quel che riguarda la funzionalita' dei suggerimenti si potrebbe espanderla ed aggiungere molti piu' giornali da suggerire all'utente ed uno spettro piu' di preferenze selezionabili.
