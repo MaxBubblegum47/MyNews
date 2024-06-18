@@ -1,53 +1,76 @@
- # MyNews
+# MyNews
 ## Introduzione
-My news è una applicazione sviluppata in java per android che ha l'obiettivo di permettere all'utente di visualizzare diverse pagine di giornali online comodamente dal suo smartphone android.
-L'utente riceve notifiche ogni qual volta vi sono dei nuovi contenuti all'interno dei siti web che sono supportati di defualt dall'applicazione:
-- corriere della sera
-- repubblica
-- gazzetta dello sport
-- internazionale
-- sky tg24
-  
-ed è possibile salvare localmente gli articoli preferiti. All'interno dell'applicazione è inoltre presente una pagina che suggerisce all'utente altri giornali da poter leggere, basandosi su alcune preferenze che l'utente può definire all'interno della stessa pagina.
+My news è una applicazione sviluppata in java per dispotivi android che ha l'obiettivo di permettere all'utente di visualizzare diverse pagine di giornali online proprio smartphone android. All'interno dell'applicazione
+sono disponibili le maggiori testate giornalistiche italiane (Repubblica, Corriere della Sera, Gazzetta dello sport, ...), ma qualora non dovessero bastare l'utente puo' ricevere suggerimenti rispetto ad altri giornali. L'applicazione fornisce la possibilita' di salvare gli articoli preferiti in un comodo database locale e controlla regolarmente la presenza di nuovi contenuti all'interno dei siti web che sono disponibili dall'applicazione. Visualizzando i giornali attraverso l'applicazione l'utente evita qualsiasi tipo di pubblicita'. Questo perche' nativamente l'applicazione non esegue alcun codice javascript presente nei siti e il risultato finale e' quella di una navigazione senza alcun tipo di cooky di sessione, pubblicita', spot da visualizzare per 10 secondi per poter leggere il nostro articolo preferito. 
 
-All'avvio dell'applicazione ci si trova all'interno della pagina principale, ovvero il sito di repubblica. Da questo sito possiamo spostarci all'interno degli altri giornali online attraverso un menù a tendina presente in alto a sinitra sinistra. Aprendo tale menù è possibile visualizzare tutti gli altri giornali che sono visualizzabili all'interno dell'applicazione. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta attualmente leggendo alla lista di articoli preferiti. Questa lista viene salvata in un database locale all'interno dell'applicazione stessa ed è sempre disponibile (anche offline).
+All'avvio dell'applicazione ci si trova all'interno all'interno della pagina di uno dei giornali online disponibili. Da questo sito possiamo spostarsi all'interno degli altri giornali attraverso un menù presente in alto a sinitra. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta leggendo alla lista di articoli preferiti. Qualora l'utente volesse decidere di eliminare l'attuale lista di preferita bastera' accedere alle impostazioni presenti in alto a destra.
+
+immagine esempio con delete giornali prefe
 
 
 ## Approfondimento tecnico
-Tutta l'applicazione è stata scritta in java e utilizza AndroidX come libreria principale, in particolare per quel che concerne la parte di navigazione tra le varie schermate. Il programma main conteine una classe che estente AppCompatActivity. All'interno di questa classe possiamo trovare la gestione di due componenti molto importanti per il corretto funzionamento dell'applicazione: la gestione dei preferiti e la gestione dei threads per la verifica di nuovi contenuti all'interno dei siti delle testate giornalistiche. 
-
-### Gestione Database
-Per quel che concerne il database è stata utilizzata la libreria sqlite. Il database è locale e al suo interno vengono inseriti tutti gli articoli che l'utente aggiunge premendo il bottone relativo a tale funzione. La classe java relativa al database lo istanzia e fornisce i metodi per l'ottenimento di tutte le informazioni in esso contenuto. Questa ultima funzionalità è utile al fine di poter stampare a schermo la lista di tutti gli articoli preferiti. Di seguito il codice relativo al database:
+### WebView
+L'applicazione fa intenso uso di webview per andare a visualizzare le pagine dei giornali. La webview permette di visualizzare siti e di poterli navigare, come se venisse usato un browser web. La differenza piu' grande e' che non puo' eseguire tutto il codice che compone la pagina web, in particolare codice Java Script, a meno che non venga esplicitamente espresso dal programmatore:
 ```
-public class ArticleDatabaseHelper extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "articles.db";
-    private static final int DATABASE_VERSION = 1;
+    WebSettings webSettings = webView.getSettings();
+    webSettings.setJavaScriptEnabled(true);
+    webSettings.setDomStorageEnabled(true);
+    webSettings.setLoadWithOverviewMode(true);
+    webSettings.setUseWideViewPort(true);
+    webSettings.setBuiltInZoomControls(true);
+    webSettings.setDisplayZoomControls(false);
+    webSettings.setSupportZoom(true);
+    webSettings.setDefaultTextEncodingName("utf-8");
+```
+Questo porta la webview a non essere suscettibile a tutte le pubblicita' presenti sul sito ed evitando qualsiasi sistema di subscription presente su di esso. Il risultato finale e' che e' come se navigassimo sul nostro browser con un adblocker abilitato estremamente restrittivo. A livello di implementazione in Java, le webview che permettono la visualizzazione dei giornali sono tutte formate come segue:
 
-    private static final String TABLE_ARTICLES = "articles";
-    private static final String COLUMN_ID = "_id";
-    public static final String COLUMN_TITLE = "title";
-    public static final String COLUMN_URL = "url";
+```
+public class GazzettaFragment extends Fragment {
 
-    private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE " + TABLE_ARTICLES + " (" +
-                    COLUMN_ID + " INTEGER PRIMARY KEY," +
-                    COLUMN_TITLE + " TEXT," +
-                    COLUMN_URL + " TEXT)";
+    private FragmentHomeBinding binding;
 
-    public ArticleDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container, Bundle savedInstanceState) {
+
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        View root = binding.getRoot();
+
+        WebView webView = binding.webViewNews;
+        webView.loadUrl("https://gazzetta.it");
+        webView.setWebViewClient(new WebViewController());
+
+        return root;
     }
+
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQL_CREATE_ENTRIES);
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
     }
+}
+```
+Di seguito il relativo codice XML:
+```
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.GazzettaSky.GazzettaFragment">
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Implement database migration if needed
-    }
+    <WebView
+        android:id="@+id/webViewNews"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</FrameLayout>
+```
 
+Le webview non solo solamente state usate solamente per visualizzare i giornali, ma anche per la UI degli articoli suggeriti e per gli articoli preferiti. Questo perche' mi permettono di visualizzare a schermo link cliccabili dall'utente senza bisogno di creare una textview con bottoni e action listener. Tutte le webview sono inserite all'interno di fragment che vengono navigati attarverso AndroidX.
+
+### Database
+Il database è locale ed e' stata usata la libreria SQLite. Al suo interno vengono inseriti tutti gli articoli che l'utente aggiunge premendo il floating button sempre presente a schermo in basso a destra. La classe java relativa al database lo istanzia e fornisce diversi metodi per interagire con esso: addArticle, getAllArticles, deleteAllArticles, getAllArticleTitle.
+```
     public void addArticle(String title, String url) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -60,6 +83,11 @@ public class ArticleDatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllArticles() {
         SQLiteDatabase db = getReadableDatabase();
         return db.query(TABLE_ARTICLES, null, null, null, null, null, null);
+    }
+
+    public int deleteAllArticles() {
+        SQLiteDatabase db = getWritableDatabase();
+        return db.delete(TABLE_ARTICLES, null, null);
     }
 
     public ArrayList<String> getAllArticleTitles() {
@@ -76,11 +104,14 @@ public class ArticleDatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return articleTitles;
     }
-}
 ```
+Questi metodi sono legati a funzionalita' come l'aggiunta di un articolo alla lista dei preferiti, l'eliminazione di tale lista, o la visualizzazione degli articoli salvati all'interno della pagina preposta. Gli oggetti del database presentano la seguente struttura:
+- COLUMN_ID = INTEGER PRIMARY KEY
+- COLUMN_TITLE = TEXT
+- COLUMN_URL = TEXT
 
 ### Threads
-Per quel che rigurda la gestione dei threads relativi al controllo di nuovi contenuti sui giornali online è stata utilizzata la classe java Thread. Questa viene estesa e corredata di metodi che permettono la notifica all'utente qualora vi sia qualche cambiamento all'interno dei contenuti del sito. Ogni pagina web ha il suo thread dedicato che viene instanziato all'interno del main:
+All'interno dell'applicazione sono stati inseriti dei threads che controllano la presenza di nuovo sui giornali ogni 5 secondi dal primo avvio dell'applicazione. Ogni giornale ha il suo thread dedicato che viene instanziato all'interno del main:
 ```
 String websiteUrlRepubblica = "https://www.repubblica.it"; // Replace with your website URL for main page
         contentCheckerThread = new WebsiteContentCheckerThread(this, websiteUrlRepubblica);
@@ -103,7 +134,7 @@ String websiteUrlRepubblica = "https://www.repubblica.it"; // Replace with your 
         contentCheckerThread.start();
 ```
 
-Una volta lanciato il thread questi fa un dump periodico della pagina web del sito e controlla che il contenuto della pagina non sia diverso da quello precedentemente scaricato. In caso vi siano delle discrepanze, e quindi del nuovo contenuto, allora l'applicazione provvede a lanciare una notifica all'utente:
+Il thread esegue un dump periodico della pagina web del sito e controlla che il contenuto della pagina non sia diverso da quello scaricato 5 secondi prima (se disponibile). In caso vi siano delle differenze, e quindi del nuovo contenuto, allora l'applicazione provvede a fornire una notifica all'utente:
 ```
 InputStream in = urlConnection.getInputStream();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(in));
@@ -123,60 +154,79 @@ InputStream in = urlConnection.getInputStream();
 Di seguito il codice relativo alla gestione delle notifica
 ```
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "WebsiteContentNotification")
-                .setSmallIcon(R.drawable.bbc_logo_2021)
+                .setSmallIcon(R.drawable.icons8_google_news)
                 .setContentTitle("Website Content Checker")
-                .setContentText("New content detected on the website!")
+                .setContentText("New content detected on news websites!")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                .setContentIntent(pendingIntent) // Set the intent to be triggered when the notification is clicked
+                .setContentIntent(pendingIntent) // Set the intent to be triggered when the notification is clicked. The user will be brought the the main page
                 .setAutoCancel(true); // Automatically dismiss the notification when clicked
 
-        // Show notification
+        /* Show notification */
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(123, builder.build());
 ```
-### WebView
-Per quel che riguarda la visualizzazione delle pagine online è stata fatto larghissimo uso di webview. Queste permettono di poter visualizzare pagine online all'interno dell'applicazione e la particolirità è che non eseguono codice javascript di alcun tipo, quindi non permettono il caricamento di pubblicità o di altri script bloccanti che richiedono che ci si debba iscrivere al sito per poter visualizzare il contenuto. Tutto il codice relativo alle webview è riportato di seguito:
+
+### Articoli Suggeriti
+Il funzionamento degli articoli suggeriti si basa su una serie di bottoni che se premuti dall'utente indicano una sua preferenza rispetto ad un determinato tema. Combinando i valori di questi bottoni vengono poi visualizzati a schermo le testate giornalistiche che l'applicazione suggerisce all'utente. Questi giornali sono salvati all'interno dell'applicazione e presentano dei tag connessi ai bottoni sopracitati. In base alla combinazione di preferenze indicate dall'utente verranno visualizzati specifici giornali. 
 ```
-public class HomeFragment extends Fragment {
+public static List<Article> getAllArticles() {
+            List<Article> allArticles = new ArrayList<>();
 
-    private FragmentHomeBinding binding;
+            allArticles.add(new Article("https://repubblica.it", Arrays.asList("politics")));
+            allArticles.add(new Article("https://www.nytimes.com/", Arrays.asList("politics")));
+            allArticles.add(new Article("https://charliehebdo.fr/", Arrays.asList("politics")));
+            allArticles.add(new Article("https://www.aljazeera.com/", Arrays.asList("politics")));
 
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             ViewGroup container, Bundle savedInstanceState) {
+            allArticles.add(new Article("https://www.hwupgrade.it/", Arrays.asList("tech")));
+            allArticles.add(new Article("https://www.notebookcheck.net/", Arrays.asList("tech")));
+            allArticles.add(new Article("https://www.tomshardware.com/", Arrays.asList("tech")));
+            allArticles.add(new Article("https://gamersnexus.net/", Arrays.asList("tech")));
 
-        binding = FragmentHomeBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+            allArticles.add(new Article("https://www.automoto.it/", Arrays.asList("automoto")));
+            allArticles.add(new Article("https://www.auto.it/", Arrays.asList("automoto")));
+            allArticles.add(new Article("https://www.alvolante.it/", Arrays.asList("automoto")));
+            allArticles.add(new Article("https://www.inmoto.it/", Arrays.asList("automoto")));
+            allArticles.add(new Article("https://www.insella.it/", Arrays.asList("automoto")));
 
-        WebView webView = binding.webViewBBC;
-        webView.loadUrl("https://repubblica.it");
-        webView.setWebViewClient(new WebViewController());
+            allArticles.add(new Article("https://rollingstones.com/", Arrays.asList("music")));
+            allArticles.add(new Article("https://www.giornaledellamusica.it/", Arrays.asList("music")));
+            allArticles.add(new Article("https://www.essemagazine.it/", Arrays.asList("music")));
+            allArticles.add(new Article("https://pitchfork.com/news/", Arrays.asList("music")));
 
-        return root;
-    }
+            return allArticles;
+        }
 
 
+        /*
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
-    }
-}
+         * This method check the preferences that the user has set and displays
+         * the best matching news paper that could be interesting for the user.
+         */
+        public static List<Article> suggestArticles(boolean politicsPref, boolean techPref, boolean autoPref, boolean musicPref) {
+            List<Article> suggestedArticles = new ArrayList<>();
+            List<Article> allArticles = getAllArticles();
+
+            for (Article article : allArticles) {
+                if ((politicsPref && article.getTags().contains("politics"))) {
+                    suggestedArticles.add(article);
+                }
+
+                if ((techPref && article.getTags().contains("tech"))) {
+                    suggestedArticles.add(article);
+                }
+
+                if ((musicPref && article.getTags().contains("music"))) {
+                    suggestedArticles.add(article);
+                }
+
+                if ((autoPref && article.getTags().contains("automoto"))) {
+                    suggestedArticles.add(article);
+                }
+            }
+
+            return suggestedArticles;
+        }
 ```
-E questo è il relativo codice xml:
-```
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.Repubblica.HomeFragment" >
 
-    <WebView
-        android:id="@+id/webViewBBC"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
-```
+## Futuri Sviluppi
+L'applicazione allo stato attuale e' funzionante, ma necessita di alcune rifiniture per quel che riguarda l'aspetto grafico: la pagina degli articoli salvati andrebbe implementata con delle textview che migliorino la lettura della pagina e diano un aspetto piu' gradevole all'utente. Ritengo sia necessario aggiungere una funzionalita' per la quale l'utente possa aggiungere altri giornali online secondo i suoi gusti: immagino una textbox all'interno della quale l'utente inserisca l'indirizzo di un giornale online e questo venga aggiunto all'applicazione. Le notifiche potrebbero essere piu' precise e verbose, indicando il sito su cui e' presente il nuovo contenuto e che tipo di contenuto si tratta. Anche per quel che riguarda la funzionalita' dei suggerimenti si potrebbe espanderla ed aggiungere molti piu' giornali da suggerire all'utente.
