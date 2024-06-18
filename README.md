@@ -5,7 +5,7 @@ sono disponibili le maggiori testate giornalistiche italiane (Repubblica, Corrie
 
 All'avvio dell'applicazione ci si trova all'interno all'interno della pagina di uno dei giornali online disponibili. Da questo sito possiamo spostarsi all'interno degli altri giornali attraverso un menù presente in alto a sinitra. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta leggendo alla lista di articoli preferiti. Qualora l'utente volesse decidere di eliminare l'attuale lista di preferita bastera' accedere alle impostazioni presenti in alto a destra.
 
-![screenshot_1]([https://github.com/MaxBubblegum47/MyNews/blob/main/res/clean_favorites_articles.jpg](https://github.com/MaxBubblegum47/MyNews/blob/main/res/navigation_bar.jpg))
+![screenshot_1](https://github.com/MaxBubblegum47/MyNews/blob/main/res/navigation_bar.jpg)
 
 ## Approfondimento tecnico
 ### WebView
