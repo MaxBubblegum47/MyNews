@@ -5,7 +5,7 @@ sono disponibili le maggiori testate giornalistiche italiane (Repubblica, Corrie
 
 All'avvio dell'applicazione ci si trova all'interno all'interno della pagina di uno dei giornali online disponibili. Da questo sito possiamo spostarsi all'interno degli altri giornali attraverso un menù presente in alto a sinitra. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta leggendo alla lista di articoli preferiti. Qualora l'utente volesse decidere di eliminare l'attuale lista di preferita bastera' accedere alle impostazioni presenti in alto a destra.
 
-![screenshot_1](https://github.com/MaxBubblegum47/MyNews/blob/main/res/clean_favorites_articles.jpg)
+![screenshot_1]([https://github.com/MaxBubblegum47/MyNews/blob/main/res/clean_favorites_articles.jpg](https://github.com/MaxBubblegum47/MyNews/blob/main/res/navigation_bar.jpg))
 
 ## Approfondimento tecnico
 ### WebView
@@ -67,6 +67,8 @@ Di seguito il relativo codice XML:
 
 Le webview non solo solamente state usate solamente per visualizzare i giornali, ma anche per la UI degli articoli suggeriti e per gli articoli preferiti. Questo perche' mi permettono di visualizzare a schermo link cliccabili dall'utente senza bisogno di creare una textview con bottoni e action listener. Tutte le webview sono inserite all'interno di fragment che vengono navigati attarverso AndroidX.
 
+![screenshot_2](https://github.com/MaxBubblegum47/MyNews/blob/main/res/internazionale_example.jpg)
+
 ### Database
 Il database è locale ed e' stata usata la libreria SQLite. Al suo interno vengono inseriti tutti gli articoli che l'utente aggiunge premendo il floating button sempre presente a schermo in basso a destra. La classe java relativa al database lo istanzia e fornisce diversi metodi per interagire con esso: addArticle, getAllArticles, deleteAllArticles, getAllArticleTitle.
 ```
@@ -108,6 +110,9 @@ Questi metodi sono legati a funzionalita' come l'aggiunta di un articolo alla li
 - COLUMN_ID = INTEGER PRIMARY KEY
 - COLUMN_TITLE = TEXT
 - COLUMN_URL = TEXT
+
+![screenshot_3](https://github.com/MaxBubblegum47/MyNews/blob/main/res/favorites_articles.jpg)
+![screenshot_4](https://github.com/MaxBubblegum47/MyNews/blob/main/res/clean_favorites_articles.jpg)
 
 ### Threads
 All'interno dell'applicazione sono stati inseriti dei threads che controllano la presenza di nuovo sui giornali ogni 5 secondi dal primo avvio dell'applicazione. Ogni giornale ha il suo thread dedicato che viene instanziato all'interno del main:
@@ -164,6 +169,7 @@ Di seguito il codice relativo alla gestione delle notifica
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(123, builder.build());
 ```
+![screenshot_5](https://github.com/MaxBubblegum47/MyNews/blob/main/res/notifications.jpg)
 
 ### Articoli Suggeriti
 Il funzionamento degli articoli suggeriti si basa su una serie di bottoni che se premuti dall'utente indicano una sua preferenza rispetto ad un determinato tema. Combinando i valori di questi bottoni vengono poi visualizzati a schermo le testate giornalistiche che l'applicazione suggerisce all'utente. Questi giornali sono salvati all'interno dell'applicazione e presentano dei tag connessi ai bottoni sopracitati. In base alla combinazione di preferenze indicate dall'utente verranno visualizzati specifici giornali. 
@@ -226,6 +232,8 @@ public static List<Article> getAllArticles() {
             return suggestedArticles;
         }
 ```
+
+![screenshot_6](https://github.com/MaxBubblegum47/MyNews/blob/main/res/preferences_2.jpg)
 
 ## Futuri Sviluppi
 L'applicazione allo stato attuale e' funzionante, ma necessita di alcune rifiniture per quel che riguarda l'aspetto grafico: la pagina degli articoli salvati andrebbe implementata con delle textview che migliorino la lettura della pagina e diano un aspetto piu' gradevole all'utente. Ritengo sia necessario aggiungere una funzionalita' per la quale l'utente possa aggiungere altri giornali online secondo i suoi gusti: immagino una textbox all'interno della quale l'utente inserisca l'indirizzo di un giornale online e questo venga aggiunto all'applicazione. Le notifiche potrebbero essere piu' precise e verbose, indicando il sito su cui e' presente il nuovo contenuto e che tipo di contenuto si tratta. Anche per quel che riguarda la funzionalita' dei suggerimenti si potrebbe espanderla ed aggiungere molti piu' giornali da suggerire all'utente.
