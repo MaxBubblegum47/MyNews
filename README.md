@@ -5,8 +5,7 @@ sono disponibili le maggiori testate giornalistiche italiane (Repubblica, Corrie
 
 All'avvio dell'applicazione ci si trova all'interno all'interno della pagina di uno dei giornali online, Repubblica. Da questo sito possiamo spostarsi all'interno degli altri giornali attraverso un menù presente in alto a sinitra. In basso a destra è sempre presente un'icona che permette di aggiungere l'articolo di giornale che si sta leggendo alla lista di articoli preferiti. Qualora l'utente volesse decidere di eliminare l'attuale lista di preferita bastera' accedere alle impostazioni presenti in alto a destra.
 
-![screenshot_1](https://github.com/MaxBubblegum47/MyNews/blob/main/res/navigation_bar.jpg)
-
+![screenshot_1](https://github.com/MaxBubblegum47/MyNews/blob/main/res/navigation_3.jpg)
 ## Approfondimento tecnico
 ### WebView
 L'applicazione fa uso della clasee WebView per andare a visualizzare le pagine dei giornali. Tale classe permette di visualizzare siti web come se l'utente stesse utilizzando un browser web. La differenza piu' grande e' che non puo' eseguire tutto il codice che compone la pagina web, in particolare codice Java Script, a meno che non venga esplicitamente espresso dal programmatore, come nel seguente esempio:
