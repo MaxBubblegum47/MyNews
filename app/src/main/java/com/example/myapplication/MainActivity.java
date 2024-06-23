@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.webView;
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.CorriereSeraFragment, R.id.GazzettaFragment, R.id.skyNewsFragment)
+                R.id.nav_home, R.id.nav_gallery, R.id.CorriereSeraFragment, R.id.GazzettaFragment, R.id.skyNewsFragment, R.id.InternazionaleFragment, R.id.PreferencesFragment)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
